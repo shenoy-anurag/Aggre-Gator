@@ -2,6 +2,18 @@
 
 Our project aggregates articles from a few news sites and shows them in one place for the convenience of the user.
 
+## Amazon Lightsail challenge by agorize
+
+### Application Status 
+We are presenting our submission for the 3rd round of the lightsail challenge. Currently, we are done with creation of backend services and working on integrating AWS services
+and developing frontend application as well as bug fixes.
+
+### Team members:
+1. Anuj Koli
+2. Anurag Shenoy
+3. Aman pathak
+4. Ruchika Upadhyay
+5. Naveen Kumar
 ## Demo
 
 Articles saved in MongoDB and Elastic Search after scraping:
