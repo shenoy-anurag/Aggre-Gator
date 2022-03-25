@@ -8,24 +8,11 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
 from web_scraper.common.constants import topics, PUBLISHER_CNN, CNN_bias
-from web_scraper.core.models import Article, save_articles_mongo
+from web_scraper.scraper.core import get_article
+from web_scraper.core.models import Article, save_cnn_articles_mongo
 from web_scraper.elastic.elastic_write import save_articles_es
 
 logger = logging.getLogger(__name__)
-
-
-def get_article(article_url):
-    try:
-        article_client = uReq(article_url)
-        html_content = article_client.read()
-        article_client.close()
-        article_soup = soup(html_content, "html.parser")
-        return article_soup
-    except HTTPError:
-        error_msg_title = "".join(["HTTP Error in title in article: ",
-                                   article_url, "\n"])
-        logger.error(error_msg_title)
-        raise HTTPError
 
 
 def parse_cnn_article(topic, article_url, article_soup, date_span, year, month):
@@ -53,7 +40,7 @@ def parse_cnn_article(topic, article_url, article_soup, date_span, year, month):
     try:
         for a_paragraph in article_paragraphs:
             text = a_paragraph.text.strip()
-            article_content = ' '.join([article_content, text])
+            article_content = '\n'.join([article_content, text])
     except AttributeError:
         error_msg_content = "".join([
             "Attribute Error in content in article: ", article_url, "\n"])
@@ -152,7 +139,7 @@ def scrape_year_cnn(cnn_url, year_soup, metadata):
         try:
             article_objs = scrape_month_cnn(topic.text, topic_soup,
                                             section_month_url)
-            save_articles_mongo(article_objs=article_objs)
+            save_cnn_articles_mongo(article_objs=article_objs)
             save_articles_es(article_objs=article_objs, metadata=metadata)
             num_articles += len(article_objs)
         except AttributeError:

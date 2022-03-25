@@ -9,8 +9,10 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
 from web_scraper import celery_app
-from web_scraper.common.constants import site_map_url, cnn_url
+from web_scraper.common.constants import site_map_url_cnn, cnn_url
 from web_scraper.scraper.cnn_scraper import scrape_year_cnn
+from web_scraper.scraper.fox_scraper import scrape_fox, prepare_feed_url
+from web_scraper.scraper.core import get_xml_soup
 
 logger = logging.getLogger(__name__)
 
@@ -35,14 +37,14 @@ def scrape_cnn_articles(selected_years: List[Text], metadata):
     article_num = 0
 
     try:
-        client = uReq(site_map_url)
+        client = uReq(site_map_url_cnn)
         site_map_html = client.read()
         client.close()
         # html parsing
         page_soup = soup(site_map_html, "html.parser")
     except HTTPError:
         error_msg_top = "".join(["HTTP Error in title in top site: ",
-                                 site_map_url, "\n"])
+                                 site_map_url_cnn, "\n"])
         logger.error(error_msg_top)
         logger.error(traceback.format_exc())
         raise
@@ -74,6 +76,24 @@ def scrape_cnn_articles(selected_years: List[Text], metadata):
                 logger.error(error_msg_year)
                 logger.error(traceback.format_exc())
                 continue
+
+
+@celery_app.task(name='scrape_fox_articles')
+def scrape_fox_articles(metadata):
+    prev_feed_url = ""
+    feed_url = prepare_feed_url(None)
+    num_articles = 0
+    while prev_feed_url != feed_url:
+        try:
+            _ = get_xml_soup(feed_url)  # check if rss feed url is valid
+            num_articles += scrape_fox(feed_url=feed_url, metadata=metadata)
+            prev_feed_url = feed_url
+            feed_url = prepare_feed_url(feed_url)
+        except Exception as e:
+            logger.error(e)
+            logger.error(traceback.format_exc())
+            return True
+    return True
 
 # @celery_app.task(task="send_aws_sms")
 # def send_aws_sms(message, phone_number):
