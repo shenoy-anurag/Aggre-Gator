@@ -7,12 +7,9 @@ WORKDIR /app
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-RUN apt-get update && apt-get -y install curl
-RUN #apt-get -y update && apt-get -y install nginx
-#RUN apt-get update && apt-get -y install rabbitmq-server
-
 ADD web_scraper /app/web_scraper
 
+RUN apt-get update && apt-get -y install curl
 RUN apt-get install -y python3-pip
 RUN pip3 install --upgrade pip
 

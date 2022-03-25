@@ -7,15 +7,23 @@ API_STATUS_ERROR = 'Error'
 
 # Publishers
 PUBLISHER_CNN = "CNN"
+PUBLISHER_FOX = "FOX_NEWS"
 # main site map of all CNN years
-site_map_url = "https://us.cnn.com/sitemap.html"
+site_map_url_cnn = "https://us.cnn.com/sitemap.html"
+site_map_url_fox = "https://www.foxnews.com/sitemap.xml"
 
 # CNN standard starting url
 cnn_url = "https://us.cnn.com"
+fox_news_url = "https://www.foxnews.com"
 
-# hardcoded bias and publisher data
-CNN_bias = 0
-publisher = "CNN"
+# hardcoded bias [-1, +1] -1 indicates extreme left leaning, +1 indicates extreme right leaning
+CNN_bias = -0.5
+FOX_bias = +0.5
+
+# FOX News
+FOX_NEWS_start_unix_timestamp = 1640796958000  # Timestamp which is 2021-12-29 11:58:36
+FOX_NEWS_next_unix_timestamp = 1645752463000
+FOX_NEWS_QUERY_ARGS = {'type': 'articles', 'from': FOX_NEWS_start_unix_timestamp}
 
 # to change based on what years you want to analyze
 selected_years = {"2022"}

@@ -10,7 +10,7 @@ from flask_jwt_extended import (
 from flask_restful import Resource
 
 from web_scraper import api, JWT_ACCESS_TOKEN_TIMEDELTA, JWT_REFRESH_TOKEN_TIMEDELTA
-from web_scraper.celery_config.celery_tasks import scrape_cnn_articles
+from web_scraper.celery_config.celery_tasks import scrape_cnn_articles, scrape_fox_articles
 from web_scraper.common import mem_cache
 from web_scraper.common.constants import API_STATUS_SUCCESS, API_STATUS_FAILURE, API_STATUS_ERROR
 
@@ -120,9 +120,29 @@ class ScrapeCNNArticles(Resource):
             return make_response(jsonify({'status': API_STATUS_ERROR}))
 
 
+class ScrapeFOXArticles(Resource):
+    def post(self):
+        added_by = request.json.get('user', None)
+        added_on = datetime.datetime.now()
+        metadata = {'added_by': added_by, 'added_on': added_on}
+        try:
+            scrape_fox_articles.delay(metadata=metadata)
+            return make_response(
+                jsonify({
+                    'status': API_STATUS_SUCCESS,
+                    'message': "scraping articles from FOX"
+                })
+            )
+        except Exception as e:
+            logger.error(e)
+            logger.debug(traceback.format_exc())
+            return make_response(jsonify({'status': API_STATUS_ERROR}))
+
+
 api.add_resource(Ping, '/ping')
 api.add_resource(Login, '/login')
 api.add_resource(TokenRefresh, '/refresh')
 api.add_resource(LogoutAccess, '/logout-access')
 api.add_resource(Protected, '/protected')
 api.add_resource(ScrapeCNNArticles, '/scrape-cnn-articles')
+api.add_resource(ScrapeFOXArticles, '/scrape-fox-articles')
