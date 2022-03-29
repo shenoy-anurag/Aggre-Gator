@@ -70,6 +70,23 @@ services:
       - mongo
       - es01
 
+  web_aggregator:
+    build:
+      context: .
+      dockerfile: web_aggregator/Dockerfile
+    entrypoint: ./entrypoint.sh
+    env_file:
+      - ./config/secrets.env
+    volumes:
+      - ./web_aggregator:/app/web_aggregator
+    networks:
+      - agg_network
+    ports:
+      - "5005:5005"
+    depends_on:
+      - mongo
+      - es01
+
   # Elastic Search Nodes:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
