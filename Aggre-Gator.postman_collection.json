@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Ping",
+			"name": "Ping Web Scraper",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -71,6 +71,71 @@
 			]
 		},
 		{
+			"name": "Ping Web App",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5005/ping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Ping Web App",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5005/ping",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5005",
+							"path": [
+								"ping"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "19"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.3 Python/3.8.10"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 25 Mar 2022 05:47:21 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"pong\"\n}"
+				}
+			]
+		},
+		{
 			"name": "Scrape CNN Articles",
 			"request": {
 				"method": "POST",
@@ -95,6 +160,36 @@
 					"port": "5001",
 					"path": [
 						"scrape-cnn-articles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scrape FOX Articles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"Anurag\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:5001/scrape-fox-articles",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"scrape-fox-articles"
 					]
 				}
 			},

@@ -2,7 +2,7 @@
 
 Our project aggregates articles from a few news sites and shows them in one place for the convenience of the user.
 
-## Amazon Lightsail challenge by agorize
+## Amazon Lightsail Challenge by Agorize
 
 ### Application Status 
 We are presenting our submission for the 3rd round of the lightsail challenge. Currently, we are done with creation of backend services and working on integrating AWS services
@@ -35,9 +35,14 @@ Run the command:
 
 to start all the containers.
 
+### Build & Run Containers
+
+`sudo docker-compose -f docker-compose.yml up --build`
+
 ### Containers
 
-- `web_scraper`: The main Flask web application which will scrape websites for articles, and return search results and feed.
+- `web_aggregator`: The main Flask web application which will return search results and feed.
+- `web_scraper`: A Flask web application which will scrape websites for articles.
 - `celery_web_scraper`: The Celery application which run the async tasks.
 - `es01`: The primary node of the ElasticSearch cluster.
 - `rabbitmq`: Broker for Celery workers and queues.
