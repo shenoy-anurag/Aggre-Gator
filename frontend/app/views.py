@@ -1,7 +1,12 @@
-from app import app
+from frontend import app
 from flask import render_template
 from .config import category_mapper
 from .request import *
+
+
+@app.route('/test')
+def hello_geek():
+    return '<h1>Hello from Flask & Docker</h1>'
 
 
 @app.route('/')
@@ -14,6 +19,7 @@ def home():
 def fox():
     fox_news_articles = get_articles_from_source("fox")
     return render_template('news.html', sources=fox_news_articles)
+
 
 @app.route('/sources/cnn')
 def cnn():
@@ -56,16 +62,14 @@ def health():
     source = get_categorical_articles(category_mapper["CATEGORY_HEALTH"])
     return render_template('news.html', sources=source)
 
+
 @app.route('/year/2021')
 def year_2021():
     source = get_yearly_articles(2021)
     return render_template('news.html', sources=source)
 
+
 @app.route('/year/2022')
 def year_2022():
     source = get_yearly_articles(2022)
     return render_template('news.html', sources=source)
-
-@app.route('/testGreetings')
-def hello_geek():
-    return '<h1>Hello from Flask & Docker</h1>'
