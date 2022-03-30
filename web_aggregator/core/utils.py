@@ -26,3 +26,4 @@ def truncate_descriptions(articles):
         else:
             articles[i]["description"] = articles[i]["article"] + "..."
         articles[i].pop("article")
+    return articles
