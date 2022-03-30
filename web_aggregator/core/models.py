@@ -6,9 +6,9 @@ from typing import Text
 
 from pymongo import errors
 
-from web_aggregator import mongo
-from web_aggregator.core.utils import convert_categories, convert_sources, truncate_descriptions
+from web_aggregator import mongo, app
 from web_aggregator.common.constants import PUBLISHER_FOX, PUBLISHER_CNN, CATEGORY_MAPPINGS, SOURCES
+from web_aggregator.core.utils import convert_categories, truncate_descriptions
 
 logger = logging.getLogger(__name__)
 
@@ -155,10 +155,11 @@ def fetch_mongo_articles(categories, sources, years, page, per_page):
         articles = truncate_descriptions(articles)
         return articles
     except errors.OperationFailure as e:
-        logger.error(e)
-        logger.debug(traceback.format_exc())
+        app.logger.error(e)
+        app.logger.debug(traceback.format_exc())
         return e.details.get("errmsg")
     except Exception as e:
-        logger.error(e)
-        logger.debug(traceback.format_exc())
+        print(traceback.format_exc())
+        app.logger.error(e)
+        app.logger.debug(traceback.format_exc())
         return None
