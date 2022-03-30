@@ -33,6 +33,14 @@ def parse_cnn_article(topic, article_url, article_soup, date_span, year, month):
     article.create_creation_date()
 
     try:
+        authors = article_soup.findAll("meta", {"name": "author"})
+        article.author = authors[0].get("content")
+    except:
+        error_msg_content = "".join([
+            "Couldn't find author in article: ", article_url, "\n"])
+        logger.error(error_msg_content)
+
+    try:
         images = article_soup.findAll("meta", {"property": "og:image"})
         article.url_image = images[0].get("content")
     except:
