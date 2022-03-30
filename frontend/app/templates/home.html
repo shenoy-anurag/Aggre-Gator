@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{#TODO: CHANGE SOURCE.NAME TO SOURCE#}
+
 <div class="container-fluid landing">
     <div class="row">
         {% for source, title, desc, author, img, p_date, url in articles %}
@@ -9,7 +9,7 @@
                 <div class="card mb-3 bg-dark text-white">
                     <img src="{{ img }}" class="card-img image-fluid" alt="...">
                     <div class="card-body">
-                        <p class="card-text source">{{ source.name }}</p>
+                        <p class="card-text source">{{ source }}</p>
                         <a href="{{ url }}">
                             <h2 class="card-title"><b> {{ title }} </b></h2>
                         </a>
