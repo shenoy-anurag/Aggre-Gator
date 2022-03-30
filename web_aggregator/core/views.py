@@ -9,7 +9,7 @@ from flask_jwt_extended import (
 )
 from flask_restful import Resource
 
-from web_aggregator import api, JWT_ACCESS_TOKEN_TIMEDELTA, JWT_REFRESH_TOKEN_TIMEDELTA
+from web_aggregator import app, api, JWT_ACCESS_TOKEN_TIMEDELTA, JWT_REFRESH_TOKEN_TIMEDELTA
 # from web_aggregator.common import mem_cache
 from web_aggregator.common.constants import (
     API_STATUS_SUCCESS, API_STATUS_FAILURE, API_STATUS_ERROR, DEFAULT_PAGE, DEFAULT_PER_PAGE
@@ -109,8 +109,8 @@ class Articles(Resource):
             else:
                 return make_response(jsonify({'status': API_STATUS_FAILURE, 'articles': None}))
         except Exception as e:
-            logger.error(e)
-            logger.debug(traceback.format_exc())
+            app.logger.error(e)
+            app.logger.debug(traceback.format_exc())
             return make_response(jsonify({'status': API_STATUS_ERROR}))
 
 

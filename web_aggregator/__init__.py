@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+app.logger.setLevel(logging.DEBUG)
+
 app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 app.config['DB_NAME'] = os.environ.get('DB_NAME')
 
