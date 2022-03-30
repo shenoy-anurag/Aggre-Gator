@@ -11,7 +11,7 @@ from flask_restful import Resource
 
 from web_scraper import api, JWT_ACCESS_TOKEN_TIMEDELTA, JWT_REFRESH_TOKEN_TIMEDELTA
 from web_scraper.celery_config.celery_tasks import scrape_cnn_articles, scrape_fox_articles
-from web_scraper.common import mem_cache
+# from web_scraper.common import mem_cache
 from web_scraper.common.constants import API_STATUS_SUCCESS, API_STATUS_FAILURE, API_STATUS_ERROR
 
 core_blueprint = Blueprint('core', __name__)
@@ -70,22 +70,22 @@ class TokenRefresh(Resource):
 #     return jti in mem_cache.get_blacklisted_tokens()
 
 
-class LogoutAccess(Resource):
-    @jwt_required
-    def post(self):
-        try:
-            jti = get_jti(get_jwt())
-            logger.debug(jti)
-            blacklisted_tokens = mem_cache.get_blacklisted_tokens()
-            blacklisted_tokens.add(jti)
-            mem_cache.set_blacklisted_tokens(blacklisted_tokens)
-            return make_response(
-                jsonify({'status': API_STATUS_SUCCESS, 'message': 'Access token has been revoked'}), 200)
-        except Exception as e:
-            logger.error(e)
-            logger.debug(traceback.format_exc())
-            return make_response(
-                jsonify({'status': API_STATUS_ERROR, 'message': 'Something went wrong'}), 500)
+# class LogoutAccess(Resource):
+#     @jwt_required
+#     def post(self):
+#         try:
+#             jti = get_jti(get_jwt())
+#             logger.debug(jti)
+#             blacklisted_tokens = mem_cache.get_blacklisted_tokens()
+#             blacklisted_tokens.add(jti)
+#             mem_cache.set_blacklisted_tokens(blacklisted_tokens)
+#             return make_response(
+#                 jsonify({'status': API_STATUS_SUCCESS, 'message': 'Access token has been revoked'}), 200)
+#         except Exception as e:
+#             logger.error(e)
+#             logger.debug(traceback.format_exc())
+#             return make_response(
+#                 jsonify({'status': API_STATUS_ERROR, 'message': 'Something went wrong'}), 500)
 
 
 class Protected(Resource):
@@ -142,7 +142,7 @@ class ScrapeFOXArticles(Resource):
 api.add_resource(Ping, '/ping')
 api.add_resource(Login, '/login')
 api.add_resource(TokenRefresh, '/refresh')
-api.add_resource(LogoutAccess, '/logout-access')
+# api.add_resource(LogoutAccess, '/logout-access')
 api.add_resource(Protected, '/protected')
 api.add_resource(ScrapeCNNArticles, '/scrape-cnn-articles')
 api.add_resource(ScrapeFOXArticles, '/scrape-fox-articles')

@@ -92,6 +92,14 @@ def parse_fox_article(article_url, article_soup: bs4.BeautifulSoup, date_modifie
         article.month = article_published_date.month
         article.creation_date = article_published_date
 
+    try:
+        images = article_soup.findAll("meta", {"property": "og:image"})
+        article.url_image = images[0].get("content")
+    except:
+        error_msg_content = "".join([
+            "Couldn't find image url in article: ", article_url, "\n"])
+        logger.error(error_msg_content)
+
     # div class ="author-byline" >
     author_details = article_soup.find_all("div", {"class": "author-byline"})
     if author_details:

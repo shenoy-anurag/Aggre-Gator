@@ -155,3 +155,42 @@ def search_query_with_filters(index, search_string, filters, publisher=None):
     }
     data = elasticsearch_obj.search(index=index, body=body)
     return data
+
+
+def search_query_with_or_filters(index, filters, publishers):
+    # Filters is a list of dictionaries which contain the filter values.
+    filter_list = []
+    if publishers:
+        filter_list.extend([{"term": {'publisher': publisher.lower()}} for publisher in publishers])
+    term_filters = filters.get('filters')
+    if term_filters:
+        for fltr in term_filters:
+            key = fltr.get('field')
+            values = fltr.get('values')
+            for value in values:
+                filter_list.append({"term": {key: value.lower()}})
+    range_filters = filters.get('rangeFilters')
+    if range_filters:
+        for fltr in range_filters:
+            key = fltr.get('field')
+            values = fltr.get('values')
+            for value in values:
+                # value_id = value.get('id')
+                start = value.get('start')
+                end = value.get('end')
+                filter_list.append({'range': {key: {'gte': start, 'lte': end}}})
+    print(filter_list)
+    body = {
+        "size": 10000,
+        "query": {
+            "bool": {
+                "filter": [{
+                    "bool": {
+                        "should": filter_list
+                    }
+                }]
+            }
+        }
+    }
+    data = elasticsearch_obj.search(index=index, body=body)
+    return data

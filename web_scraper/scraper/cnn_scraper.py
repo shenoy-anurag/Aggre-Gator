@@ -32,6 +32,14 @@ def parse_cnn_article(topic, article_url, article_soup, date_span, year, month):
     article.month = month
     article.create_creation_date()
 
+    try:
+        images = article_soup.findAll("meta", {"property": "og:image"})
+        article.url_image = images[0].get("content")
+    except:
+        error_msg_content = "".join([
+            "Couldn't find image url in article: ", article_url, "\n"])
+        logger.error(error_msg_content)
+
     # Finding all paragraphs of the article's contents
     article_paragraphs = article_soup.findAll("div", {"class": "zn-body__paragraph"})
 
