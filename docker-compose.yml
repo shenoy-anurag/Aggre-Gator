@@ -42,7 +42,7 @@ services:
       dockerfile: web_scraper/Dockerfile
     entrypoint: ./entrypoint.sh
     env_file:
-      - ./config/secrets.env
+      - ./config/prod.env
     volumes:
       - ./web_scraper:/app/web_scraper
     networks:
@@ -60,7 +60,7 @@ services:
       dockerfile: web_scraper/Dockerfile
     entrypoint: ./celery_entrypoint.sh
     env_file:
-      - ./config/secrets.env
+      - ./config/prod.env
     volumes:
       - ./web_scraper:/app/web_scraper
     networks:
@@ -76,7 +76,7 @@ services:
       dockerfile: web_aggregator/Dockerfile
     entrypoint: ./entrypoint.sh
     env_file:
-      - ./config/secrets.env
+      - ./config/prod.env
     volumes:
       - ./web_aggregator:/app/web_aggregator
     networks:
