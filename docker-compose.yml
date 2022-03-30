@@ -19,14 +19,14 @@ services:
     networks:
       - agg_network
 
-  memcached:
-    image: memcached:latest
-    container_name: memcached
-    command: "-I 15M"
-    ports:
-      - "11211:11211"
-    networks:
-      - agg_network
+#  memcached:
+#    image: memcached:latest
+#    container_name: memcached
+#    command: "-I 15M"
+#    ports:
+#      - "11211:11211"
+#    networks:
+#      - agg_network
 
   rabbitmq:
     hostname: rabbitmq

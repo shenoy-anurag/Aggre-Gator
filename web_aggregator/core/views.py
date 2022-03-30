@@ -1,16 +1,21 @@
+import datetime
 import logging
 import os
 import traceback
 
 from flask import Blueprint, request, jsonify, make_response
 from flask_jwt_extended import (
-    jwt_required, create_access_token, get_jwt_identity, create_refresh_token, get_jwt, get_jti
+    jwt_required, create_access_token, get_jwt_identity, create_refresh_token
 )
 from flask_restful import Resource
 
 from web_aggregator import api, JWT_ACCESS_TOKEN_TIMEDELTA, JWT_REFRESH_TOKEN_TIMEDELTA
-from web_aggregator.common import mem_cache
-from web_aggregator.common.constants import API_STATUS_SUCCESS, API_STATUS_FAILURE, API_STATUS_ERROR
+# from web_aggregator.common import mem_cache
+from web_aggregator.common.constants import (
+    API_STATUS_SUCCESS, API_STATUS_FAILURE, API_STATUS_ERROR, DEFAULT_PAGE, DEFAULT_PER_PAGE
+)
+from web_aggregator.core.controller import fetch_categories
+from web_aggregator.core.models import fetch_mongo_articles
 
 core_blueprint = Blueprint('core', __name__)
 
@@ -62,30 +67,6 @@ class TokenRefresh(Resource):
             return make_response(jsonify({'status': API_STATUS_ERROR, 'message': 'Something went wrong'}), 500)
 
 
-# @app_jwt.token_in_blocklist_loader
-# def check_if_token_in_blacklist(decrypted_token):
-#     jti = decrypted_token['jti']
-#     return jti in mem_cache.get_blacklisted_tokens()
-
-
-class LogoutAccess(Resource):
-    @jwt_required
-    def post(self):
-        try:
-            jti = get_jti(get_jwt())
-            logger.debug(jti)
-            blacklisted_tokens = mem_cache.get_blacklisted_tokens()
-            blacklisted_tokens.add(jti)
-            mem_cache.set_blacklisted_tokens(blacklisted_tokens)
-            return make_response(
-                jsonify({'status': API_STATUS_SUCCESS, 'message': 'Access token has been revoked'}), 200)
-        except Exception as e:
-            logger.error(e)
-            logger.debug(traceback.format_exc())
-            return make_response(
-                jsonify({'status': API_STATUS_ERROR, 'message': 'Something went wrong'}), 500)
-
-
 class Protected(Resource):
     @jwt_required
     def post(self):
@@ -98,8 +79,44 @@ class Protected(Resource):
             return make_response(jsonify({'status': API_STATUS_ERROR}))
 
 
+class Categories(Resource):
+    def get(self):
+        try:
+            categories = fetch_categories()
+            if categories:
+                return make_response(jsonify({'status': API_STATUS_SUCCESS, 'data': categories}))
+            else:
+                return make_response(jsonify({'status': API_STATUS_FAILURE, 'data': None}))
+        except Exception as e:
+            logger.error(e)
+            logger.debug(traceback.format_exc())
+            return make_response(jsonify({'status': API_STATUS_ERROR}))
+
+
+class Articles(Resource):
+    def post(self):
+        try:
+            categories = request.json.get('categories', [])
+            sources = request.json.get('sources', [])
+            per_page = request.json.get('per_page', DEFAULT_PER_PAGE)
+            page = request.json.get('page', DEFAULT_PAGE)
+            years = request.json.get('years', [str(datetime.datetime.now().year)])
+            articles = fetch_mongo_articles(
+                categories=categories, sources=sources, years=years, page=page, per_page=per_page
+            )
+            if articles:
+                return make_response(jsonify({'status': API_STATUS_SUCCESS, 'articles': articles}))
+            else:
+                return make_response(jsonify({'status': API_STATUS_FAILURE, 'articles': None}))
+        except Exception as e:
+            logger.error(e)
+            logger.debug(traceback.format_exc())
+            return make_response(jsonify({'status': API_STATUS_ERROR}))
+
+
 api.add_resource(Ping, '/ping')
 api.add_resource(Login, '/login')
 api.add_resource(TokenRefresh, '/refresh')
-api.add_resource(LogoutAccess, '/logout-access')
 api.add_resource(Protected, '/protected')
+api.add_resource(Categories, '/categories')
+api.add_resource(Articles, '/articles')

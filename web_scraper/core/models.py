@@ -13,13 +13,14 @@ logger = logging.getLogger(__name__)
 class Article:
     TYPE = 'article'
 
-    def __init__(self, url: Text, title: Text = None, article: Text = None, publisher: Text = None, bias=None,
-                 topic=None, tags=None, year: int = 0, month: int = 0, day: int = 0, author: Text = "",
-                 author_url: Text = "", character_length: int = None, comments=None):
+    def __init__(self, url: Text, title: Text = None, article: Text = None, publisher: Text = None,
+                 image_url: Text = None, bias=None, topic=None, tags=None, year: int = 0, month: int = 0, day: int = 0,
+                 author: Text = "", author_url: Text = "", character_length: int = None, comments=None):
         self.url = url
         self.title = title
         self.article = article
         self.publisher = publisher
+        self.url_image = image_url
         self.bias = bias
         self.topic = topic
         self.tags = [] if not tags else tags
@@ -41,8 +42,8 @@ class Article:
     def create_mongo_document(self):
         return {
             'type': self.TYPE, 'publisher': self.publisher, 'url': self.url, 'title': self.title, 'author': self.author,
-            'author_url': self.author_url, 'article': self.article, 'bias': self.bias, 'topic': self.topic,
-            'tags': self.tags, 'year': self.year, 'month': self.month, 'day': self.day,
+            'author_url': self.author_url, 'article': self.article, 'url_image': self.url_image, 'bias': self.bias,
+            'topic': self.topic, 'tags': self.tags, 'year': self.year, 'month': self.month, 'day': self.day,
             'creation_date': self.creation_date, 'modified_date': self.modified_date,
             'character_length': self.character_length, 'comments': self.comments
         }
