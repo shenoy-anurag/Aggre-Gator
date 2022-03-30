@@ -1,32 +1,32 @@
-FROM ubuntu:20.04
-ENV PYTHONUNBUFFERED 1
+FROM python:latest
 
 RUN mkdir /app
 WORKDIR /app
 
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
+ADD web_aggregator /app/web_aggregator
 
-ADD web_scraper /app/web_scraper
+RUN apt-get update \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get update && apt-get -y install curl
-RUN apt-get install -y python3-pip
-RUN pip3 install --upgrade pip
+RUN apt-get -y install curl
 
-ADD web_scraper/requirements.txt /app
+RUN groupadd -g 799 aggregator && \
+    useradd -r -u 999 -g aggregator aggregator
+
+ADD --chown=aggregator:aggregator web_aggregator/requirements.txt /app
+
+WORKDIR /app
+RUN pip3 install Flask
 RUN pip3 install -r /app/requirements.txt
 
-RUN ls
-RUN locale -a
+USER aggregator
 
-# RUN locale-gen en_US en_US.UTF-8
-# RUN dpkg-reconfigure locales
+COPY web_aggregator/wsgi.py /app
+COPY web_aggregator/entrypoint.sh /app
+COPY web_aggregator/celery_entrypoint.sh /app
 
-# RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+# RUN chmod +x ./entrypoint.sh
+# RUN chmod +x ./celery_entrypoint.sh
 
-COPY web_scraper/wsgi.py /app
-COPY web_scraper/entrypoint.sh /app
-COPY web_scraper/celery_entrypoint.sh /app
-
-RUN chmod +x ./entrypoint.sh
-RUN chmod +x ./celery_entrypoint.sh
+CMD [ "python", "./wsgi.py" ]
