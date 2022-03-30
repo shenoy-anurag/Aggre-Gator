@@ -48,7 +48,7 @@ def get_articles_for_home():
 
 
 def get_categorical_articles(category):
-    category = category.title
+    print(category)
     params = {
         "years": ["2022"],
         "categories": [category],

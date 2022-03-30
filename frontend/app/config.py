@@ -30,6 +30,10 @@ category_mapper = {
     "CATEGORY_SCIENCE": "Science",
     "CATEGORY_SPORTS": "Sports",
     "CATEGORY_HEALTH": "Health",
+    "CATEGORY_US" : "US",
+    "CATEGORY_WORLD" : "World",
+    "CATEGORY_POLITICS" : "Politics",
+    "CATEGORY_TRAVEL" : "Travel",
 }
 
 api_url_mapper = {

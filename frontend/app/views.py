@@ -45,15 +45,15 @@ def entertainment():
     return render_template('news.html', sources=source)
 
 
-@app.route('/category/science')
-def science():
-    source = get_categorical_articles(category_mapper["CATEGORY_SCIENCE"])
+@app.route('/category/us')
+def us():
+    source = get_categorical_articles(category_mapper["CATEGORY_US"])
     return render_template('news.html', sources=source)
 
 
-@app.route('/category/sports')
-def sports():
-    source = get_categorical_articles(category_mapper["CATEGORY_SPORTS"])
+@app.route('/category/world')
+def world():
+    source = get_categorical_articles(category_mapper["CATEGORY_WORLD"])
     return render_template('news.html', sources=source)
 
 
@@ -62,6 +62,15 @@ def health():
     source = get_categorical_articles(category_mapper["CATEGORY_HEALTH"])
     return render_template('news.html', sources=source)
 
+@app.route('/category/politics')
+def politics():
+    source = get_categorical_articles(category_mapper["CATEGORY_POLITICS"])
+    return render_template('news.html', sources=source)
+
+@app.route('/category/travel')
+def travel():
+    source = get_categorical_articles(category_mapper["CATEGORY_TRAVEL"])
+    return render_template('news.html', sources=source)
 
 # @app.route('/year/2021')
 # def year_2021():
