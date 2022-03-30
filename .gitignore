@@ -6,3 +6,4 @@ thumbs.db
 
 exp/
 config/.env
+config/prod.env
