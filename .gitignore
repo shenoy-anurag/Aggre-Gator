@@ -10,3 +10,5 @@ config/prod.env
 
 frontend/.idea
 frontend/venv
+
+frontend/app/__pycache__/

@@ -41,7 +41,7 @@ def get_articles_for_home():
         "page": 1,
         "per_page": 100
     }
-    get_articles = requests.post(url_to_hit, data=params)
+    get_articles = requests.post(url_to_hit, json=params)
     all_articles = get_articles['articles']
     return create_contents_from_all_articles(all_articles)
 

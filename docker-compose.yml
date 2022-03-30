@@ -71,6 +71,7 @@ services:
       - es01
 
   web_aggregator:
+    container_name: web_aggregator
     build:
       context: .
       dockerfile: web_aggregator/Dockerfile
