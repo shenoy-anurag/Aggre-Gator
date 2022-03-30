@@ -3,7 +3,8 @@ from .config import BACKEND_URL, BACKEND_PORT
 from .config import api_url_mapper
 from .models import Articles
 
-url = BACKEND_URL + ":" + BACKEND_PORT + "/articles"
+url_to_hit = BACKEND_URL + ":" + BACKEND_PORT + "/articles"
+print(url_to_hit)
 
 def create_contents_from_all_articles(all_articles):
     all_articles_results = []
@@ -31,9 +32,16 @@ def create_contents_from_all_articles(all_articles):
     return contents
 
 
-def publishedArticles():
+def get_articles_for_home():
     # TODO: ADD API CALL
-    get_articles = requests.get(api_url_mapper["URL_HOME"])
+    params = {
+        "years": ["2022"],
+        "categories": None,
+        "sources": None,
+        "page": 1,
+        "per_page": 100
+    }
+    get_articles = requests.post(url_to_hit, data=params)
     all_articles = get_articles['articles']
     return create_contents_from_all_articles(all_articles)
 

@@ -1,17 +1,17 @@
-from frontend import app
+from app import app
 from flask import render_template
 from .config import category_mapper
 from .request import *
 
 
-@app.route('/test')
+@app.route('/test/')
 def hello_geek():
     return '<h1>Hello from Flask & Docker</h1>'
 
 
 @app.route('/')
 def home():
-    article = publishedArticles()
+    article = get_articles_for_home()
     return render_template('home.html', articles=article)
 
 
