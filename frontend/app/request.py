@@ -1,17 +1,11 @@
 import requests
-
+from .config import BACKEND_URL, BACKEND_PORT
 from .config import api_url_mapper
 from .models import Articles
 
-api_key = None
-base_url = None
-base_url_for_everything = None
-base_url_top_headlines = None
-base_source_list = None
-
+url = BACKEND_URL + ":" + BACKEND_PORT + "/articles"
 
 def create_contents_from_all_articles(all_articles):
-
     all_articles_results = []
     source = []
     title = []
@@ -35,6 +29,7 @@ def create_contents_from_all_articles(all_articles):
         contents = zip(source, title, desc, author, img, p_date, url)
 
     return contents
+
 
 def publishedArticles():
     # TODO: ADD API CALL

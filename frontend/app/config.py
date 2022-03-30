@@ -1,11 +1,14 @@
-BACKEND_URL = ""
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
+BACKEND_URL = os.environ.get("BACKEND_URL")
+BACKEND_PORT = os.environ.get("BACKEND_PORT")
+
 
 class Config:
-    NEWS_BASE_URL_SOURCES = 'https://newsapi.org/v2/top-headlines/sources?apiKey={}'
-    NEWS_BASE_EVERYTHING_URL = 'https://newsapi.org/v2/everything?domains={}&apiKey={}'
-    NEWS_BASE_HEADLINES_URL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey={}'
-    NEWS_BASE_SOURCE = 'https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'
-    API_KEY = "f1a683b7df544ace8de3d9ce54790eb1"
+    DEBUG = False
+
 
 class ProdConfig(Config):
     pass

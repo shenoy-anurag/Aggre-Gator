@@ -6,3 +6,6 @@ thumbs.db
 
 exp/
 config/.env
+
+frontend/.idea
+frontend/venv

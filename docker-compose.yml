@@ -87,6 +87,21 @@ services:
       - mongo
       - es01
 
+  frontend_flask:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    env_file:
+      - frontend/.env
+    volumes:
+      - ./frontend:/app/frontend
+    networks:
+      - agg_network
+    ports:
+      - "5009:5009"
+    depends_on:
+      - web_aggregator
+
   # Elastic Search Nodes:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
