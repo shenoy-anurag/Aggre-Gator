@@ -48,24 +48,38 @@ def get_articles_for_home():
 
 
 def get_categorical_articles(category):
-    # TODO: ADD API CALL
-    params = {"category": category}
-    get_articles = requests.post(api_url_mapper["URL_CATEGORY"], data=params)
-    all_articles = get_articles['articles']
+    category = category.title
+    params = {
+        "years": ["2022"],
+        "categories": [category],
+        "sources": None,
+        "page": 1,
+        "per_page": 100
+    }
+    get_articles = requests.post(url_to_hit, json=params)
+    articles_json = get_articles.json()
+    all_articles = articles_json['articles']
     return create_contents_from_all_articles(all_articles)
 
 
-def get_yearly_articles(year):
-    # TODO: Add API CALL
-    params = {'year': year}
-    get_articles = requests.post(api_url_mapper["URL_YEAR"], data=params)
-    all_articles = get_articles['articles']
-    return create_contents_from_all_articles(all_articles)
+# def get_yearly_articles(year):
+#     # TODO: Add API CALL
+#     params = {'year': year}
+#     get_articles = requests.post(api_url_mapper["URL_YEAR"], data=params)
+#     all_articles = get_articles['articles']
+#     return create_contents_from_all_articles(all_articles)
 
 
 def get_articles_from_source(source):
-    # TODO: Add API CALL
-    params = {'source': source}
-    get_articles = requests.post(api_url_mapper["URL_SOURCE"], data=params)
-    all_articles = get_articles['articles']
+    params = {
+        "years": ["2022"],
+        "categories": None,
+        "sources": source,
+        "page": 1,
+        "per_page": 100
+    }
+
+    get_articles = requests.post(url_to_hit, json=params)
+    articles_json = get_articles.json()
+    all_articles = articles_json['articles']
     return create_contents_from_all_articles(all_articles)

@@ -17,13 +17,13 @@ def home():
 
 @app.route('/sources/fox')
 def fox():
-    fox_news_articles = get_articles_from_source("fox")
+    fox_news_articles = get_articles_from_source("FOX_NEWS")
     return render_template('news.html', sources=fox_news_articles)
 
 
 @app.route('/sources/cnn')
 def cnn():
-    cnn_news_articles = get_articles_from_source("cnn")
+    cnn_news_articles = get_articles_from_source("CNN")
     return render_template('news.html', sources=cnn_news_articles)
 
 
@@ -63,13 +63,13 @@ def health():
     return render_template('news.html', sources=source)
 
 
-@app.route('/year/2021')
-def year_2021():
-    source = get_yearly_articles(2021)
-    return render_template('news.html', sources=source)
+# @app.route('/year/2021')
+# def year_2021():
+#     source = get_yearly_articles(2021)
+#     return render_template('news.html', sources=source)
 
 
-@app.route('/year/2022')
-def year_2022():
-    source = get_yearly_articles(2022)
-    return render_template('news.html', sources=source)
+# @app.route('/year/2022')
+# def year_2022():
+#     source = get_yearly_articles(2022)
+#     return render_template('news.html', sources=source)

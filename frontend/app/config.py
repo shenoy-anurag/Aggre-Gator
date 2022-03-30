@@ -24,12 +24,12 @@ config_options = {
 }
 
 category_mapper = {
-    "CATEGORY_BUSINESS": "business",
-    "CATEGORY_TECHNOLOGY": "technology",
-    "CATEGORY_ENTERTAINMENT": 'entertainment',
-    "CATEGORY_SCIENCE": "science",
-    "CATEGORY_SPORTS": "sports",
-    "CATEGORY_HEALTH": "health",
+    "CATEGORY_BUSINESS": "Business",
+    "CATEGORY_TECHNOLOGY": "Technology",
+    "CATEGORY_ENTERTAINMENT": 'Entertainment',
+    "CATEGORY_SCIENCE": "Science",
+    "CATEGORY_SPORTS": "Sports",
+    "CATEGORY_HEALTH": "Health",
 }
 
 api_url_mapper = {
