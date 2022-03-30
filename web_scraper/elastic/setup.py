@@ -21,7 +21,8 @@ def connect_elasticsearch():
         _es = Elasticsearch(
             [{"scheme": "http",
               'host': os.environ.get('ES_HOST', 'es01'),
-              'port': int(os.environ.get('ES_PORT', '9200'))}]
+              'port': int(os.environ.get('ES_PORT', '9200'))}],
+            basic_auth=(os.environ.get('ES_USER'), os.environ.get('ES_PASS'))
         )
         print(_es.__dict__)
         if _es.ping():
