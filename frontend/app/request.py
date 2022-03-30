@@ -18,12 +18,12 @@ def create_contents_from_all_articles(all_articles):
 
     for i in range(len(all_articles)):
         article = all_articles[i]
-        source.append(article['source'])
+        source.append(article['publisher'])
         title.append(article['title'])
         desc.append(article['description'])
-        author.append(article['author'])
-        img.append(article['urlToImage'])
-        p_date.append(article['publishedAt'])
+        author.append(article.get('author', ''))
+        img.append(article.get('url_image', ''))
+        p_date.append(article['creation_date'])
         url.append(article['url'])
         article_object = Articles(source, title, desc, author, img, p_date, url)
         all_articles_results.append(article_object)
@@ -42,7 +42,8 @@ def get_articles_for_home():
         "per_page": 100
     }
     get_articles = requests.post(url_to_hit, json=params)
-    all_articles = get_articles['articles']
+    articles_json = get_articles.json()
+    all_articles = articles_json['articles']
     return create_contents_from_all_articles(all_articles)
 
 
