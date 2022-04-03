@@ -72,8 +72,8 @@ def connect_opensearch():
 
 try:
     elasticsearch_obj = '' 
-    environment = os.environ.get('ENVIRONMENT', 'dev')
-    if environment == 'production':
+    cloud_status = os.environ.get('CLOUD', 'disabled')
+    if cloud_status == 'enabled':
         elasticsearch_obj = connect_opensearch()
     else:
         elasticsearch_obj = connect_elasticsearch()
@@ -90,8 +90,8 @@ def get_or_create_es_client():
         return elasticsearch_obj
     try:
         _es = ''
-        environment = os.environ.get('ENVIRONMENT', 'dev')
-        if environment == 'production':
+        cloud_status = os.environ.get('CLOUD', 'disabled')
+        if cloud_status == 'enabled':
             _es = connect_opensearch()
         else:
             _es = connect_elasticsearch()
