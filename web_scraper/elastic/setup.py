@@ -4,7 +4,8 @@ import time
 import traceback
 
 import elasticsearch
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +36,28 @@ def connect_elasticsearch():
         return None
 
 
+def connect_opensearch():
+    try:
+        awsauth = (os.environ.get('ES_USER'), os.environ.get('ES_PASS'))
+
+        _es = None  
+        _es = Elasticsearch(
+            hosts=[{'host': os.environ.get('ES_HOST', 'es01'), 'port': 443}],
+            http_auth=awsauth,
+            use_ssl=True,
+            verify_certs=True,
+            connection_class=RequestsHttpConnection
+        )
+
+        print(_es.__dict__)
+        if _es.ping():
+            print('Connected!')
+        else:
+            print('Connection Failed!')
+        return _es
+    except Exception as e:
+        return None
+
 # tries = 3
 # while not connect_elasticsearch() and tries > 0:
 #     time.sleep(10)
@@ -48,12 +71,17 @@ def connect_elasticsearch():
 
 
 try:
-    elasticsearch_obj = connect_elasticsearch()
+    elasticsearch_obj = '' 
+    environment = os.environ.get('ENVIRONMENT', 'dev')
+    if environment == 'production':
+        elasticsearch_obj = connect_opensearch()
+    else:
+        elasticsearch_obj = connect_elasticsearch()
+
     if elasticsearch_obj.ping():
         print("Elastic Search Connected!")
 except Exception as e:
-    # print(e)
-    print("Elastic Search couldn't be connected!")
+    print("Elastic Search couldn't be connected!", e)
 
 
 def get_or_create_es_client():
@@ -61,12 +89,19 @@ def get_or_create_es_client():
     if elasticsearch_obj and elasticsearch_obj.ping():
         return elasticsearch_obj
     try:
-        _es = connect_elasticsearch()
+        _es = ''
+        environment = os.environ.get('ENVIRONMENT', 'dev')
+        if environment == 'production':
+            _es = connect_opensearch()
+        else:
+            _es = connect_elasticsearch()
+
         if _es.ping():
             print('Connected!')
         else:
             print('Connection Failed!')
         return _es
+
     except Exception as e:
         logger.debug(str(e))
         logger.debug(traceback.format_exc())
