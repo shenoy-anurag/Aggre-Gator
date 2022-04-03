@@ -9,6 +9,8 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ENV CGO_ENABLED=0 
+
 RUN apt-get -y install curl
 
 RUN groupadd -g 799 aggregator && \
@@ -25,6 +27,7 @@ USER aggregator
 COPY web_aggregator/wsgi.py /app
 COPY web_aggregator/entrypoint.sh /app
 COPY web_aggregator/celery_entrypoint.sh /app
+COPY rds-combined-ca-bundle.pem /app/
 
 # RUN chmod +x ./entrypoint.sh
 # RUN chmod +x ./celery_entrypoint.sh

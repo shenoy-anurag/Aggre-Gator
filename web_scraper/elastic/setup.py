@@ -19,7 +19,7 @@ def connect_elasticsearch():
     try:
         _es = None
         _es = Elasticsearch(
-            [{"scheme": "http",
+            [{"scheme": "https",
               'host': os.environ.get('ES_HOST', 'es01'),
               'port': int(os.environ.get('ES_PORT', '9200'))}],
             basic_auth=(os.environ.get('ES_USER'), os.environ.get('ES_PASS'))
