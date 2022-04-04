@@ -5,7 +5,6 @@ import traceback
 
 import elasticsearch
 from elasticsearch import Elasticsearch, RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
 
 logger = logging.getLogger(__name__)
 
