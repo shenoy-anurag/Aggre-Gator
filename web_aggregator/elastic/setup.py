@@ -3,7 +3,7 @@ import os
 import traceback
 
 import elasticsearch
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, RequestsHttpConnection
 
 logger = logging.getLogger(__name__)
 
@@ -53,10 +53,12 @@ def connect_opensearch():
             print('Connection Failed!')
         return _es
     except Exception as e:
+        print("exception while connecting", e)
+        print(traceback.format_exc())
         return None
 
 try:
-    elasticsearch_obj = '' 
+    elasticsearch_obj = None 
     cloud_status = os.environ.get('CLOUD', 'disabled')
     if cloud_status == 'enabled':
         elasticsearch_obj = connect_opensearch()

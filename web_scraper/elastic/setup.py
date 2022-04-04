@@ -56,6 +56,8 @@ def connect_opensearch():
             print('Connection Failed!')
         return _es
     except Exception as e:
+        print("exception while connecting", e)
+        print(traceback.format_exc())
         return None
 
 # tries = 3
@@ -71,7 +73,7 @@ def connect_opensearch():
 
 
 try:
-    elasticsearch_obj = '' 
+    elasticsearch_obj = None 
     cloud_status = os.environ.get('CLOUD', 'disabled')
     if cloud_status == 'enabled':
         elasticsearch_obj = connect_opensearch()
