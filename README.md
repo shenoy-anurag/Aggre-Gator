@@ -14,12 +14,21 @@ and developing frontend application as well as bug fixes.
 3. Aman pathak
 4. Ruchika Upadhyay
 5. Naveen Kumar
-## Demo
 
+## Demo
 Articles saved in MongoDB and Elastic Search after scraping:
 ![Mongo DB Articles Stored](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/mongo-db-articles-cnn.png?raw=true)
 ![Elastic Search Article P1](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p1.png?raw=true)
 ![Elastic Search Article P2](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p2.png?raw=true)
+
+## Documentation & Presentations
+`docs` folder contains presentations, architecture and postman collection.
+
+### Files
+- Round 1 Presentation
+- Final Presentation
+- Architecture (drawio file, jpg image)
+- Postman Collection to call APIs
 
 ## Run
 
@@ -47,4 +56,3 @@ to start all the containers.
 - `es01`: The primary node of the ElasticSearch cluster.
 - `rabbitmq`: Broker for Celery workers and queues.
 - `mongo`: MongoDB instance, primary data store, for storing articles and other user and app information.
-
