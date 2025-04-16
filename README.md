@@ -19,15 +19,24 @@ We are presenting our submission for the 3rd round of the lightsail challenge. C
 5. Naveen Kumar
 
 ## Demo
-
 ### Frontend
-![Aggre-Gator Frontend](https://github.com/shenoy-anurag/temp-json/blob/cc933f6308562a6b53e2cc80bd313d02c4fcf095/static/images/aggre-gator-frontend.png)
+![Aggre-Gator Frontend](./docs/images/aggre-gator-frontend.png)
 
-### Backend
 #### Articles saved in MongoDB and Elastic Search after scraping:
-![Mongo DB Articles Stored](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/mongo-db-articles-cnn.png?raw=true)
-![Elastic Search Article P1](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p1.png?raw=true)
-![Elastic Search Article P2](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p2.png?raw=true)
+![Mongo DB Articles Stored](./docs/images/mongo-db-articles-cnn.png?raw=true)
+![Elastic Search Article P1](./docs/images/elastic-search-articles-p1.png?raw=true)
+![Elastic Search Article P2](./docs/images/elastic-search-articles-p2.png?raw=true)
+
+## Documentation & Presentations
+`docs` folder contains presentations, architecture and postman collection.
+
+![Project Architecture](./docs/project-architecture.jpg)
+
+### Files
+- Round 1 Presentation
+- Final Presentation
+- Architecture (drawio file, jpg image)
+- Postman Collection to call APIs
 
 ## Run
 
