@@ -11,18 +11,21 @@ and developing frontend application as well as bug fixes.
 ### Team members:
 1. Anuj Koli
 2. Anurag Shenoy
-3. Aman pathak
+3. Aman Pathak
 4. Ruchika Upadhyay
 5. Naveen Kumar
 
 ## Demo
+![Home Page of Aggre-gator project](./docs/images/aggre-gator-frontend.png)
 Articles saved in MongoDB and Elastic Search after scraping:
-![Mongo DB Articles Stored](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/mongo-db-articles-cnn.png?raw=true)
-![Elastic Search Article P1](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p1.png?raw=true)
-![Elastic Search Article P2](https://github.com/shenoy-anurag/temp-json/blob/master/static/images/elastic-search-articles-p2.png?raw=true)
+![Mongo DB Articles Stored](./docs/images/mongo-db-articles-cnn.png?raw=true)
+![Elastic Search Article P1](./docs/images/elastic-search-articles-p1.png?raw=true)
+![Elastic Search Article P2](./docs/images/elastic-search-articles-p2.png?raw=true)
 
 ## Documentation & Presentations
 `docs` folder contains presentations, architecture and postman collection.
+
+![Project Architecture](./docs/project-architecture.jpg)
 
 ### Files
 - Round 1 Presentation
