@@ -4,9 +4,12 @@ Our project aggregates articles from a few news sites and shows them in one plac
 
 ## Amazon Lightsail Challenge by Agorize
 
-### Application Status 
-We are presenting our submission for the 3rd round of the lightsail challenge. Currently, we are done with creation of backend services and working on integrating AWS services
-and developing frontend application as well as bug fixes.
+### Application Status - Current
+We have presented our project on 30th March, 2022, during the Final Round of Amazon Lightsail Hackathon by Agorize, and are awaiting results.
+We are now working on more cool features for the project.
+
+### Application Status - 3rd round
+We are presenting our submission for the 3rd round of the lightsail challenge. Currently, we are done with creation of backend services and working on integrating AWS services and developing frontend application as well as bug fixes.
 
 ### Team members:
 1. Anuj Koli
@@ -16,8 +19,10 @@ and developing frontend application as well as bug fixes.
 5. Naveen Kumar
 
 ## Demo
-![Home Page of Aggre-gator project](./docs/images/aggre-gator-frontend.png)
-Articles saved in MongoDB and Elastic Search after scraping:
+### Frontend
+![Aggre-Gator Frontend](./docs/images/aggre-gator-frontend.png)
+
+#### Articles saved in MongoDB and Elastic Search after scraping:
 ![Mongo DB Articles Stored](./docs/images/mongo-db-articles-cnn.png?raw=true)
 ![Elastic Search Article P1](./docs/images/elastic-search-articles-p1.png?raw=true)
 ![Elastic Search Article P2](./docs/images/elastic-search-articles-p2.png?raw=true)
@@ -53,6 +58,7 @@ to start all the containers.
 
 ### Containers
 
+- `frontend_flask`: The Flask web application which will return html pages and act as the frontend for our project.
 - `web_aggregator`: The main Flask web application which will return search results and feed.
 - `web_scraper`: A Flask web application which will scrape websites for articles.
 - `celery_web_scraper`: The Celery application which run the async tasks.
