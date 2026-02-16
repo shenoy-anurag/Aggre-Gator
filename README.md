@@ -12,10 +12,10 @@ We are now working on more cool features for the project.
 We are presenting our submission for the 3rd round of the lightsail challenge. Currently, we are done with creation of backend services and working on integrating AWS services and developing frontend application as well as bug fixes.
 
 ### Team members:
-1. Anuj Koli
-2. Anurag Shenoy
-3. Aman Pathak
-4. Ruchika Upadhyay
+1. [Anuj Koli](https://github.com/R3dIO) 
+2. [Anurag Shenoy](https://github.com/shenoy-anurag)
+3. [Aman Pathak](https://github.com/pathak-aman)
+4. [Ruchika Upadhyay](https://github.com/amateurPotato)
 5. Naveen Kumar
 
 ## Demo
